@@ -11,7 +11,8 @@ import {
   getDefaultRegistry,
 } from "../utils";
 import validateFormData, { toErrorList } from "../validate";
-// import "./Form.css";
+// import 'semantic-ui-css';
+import "./Form.css";
 export default class Form extends Component {
   static defaultProps = {
     uiSchema: {},
