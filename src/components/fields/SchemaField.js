@@ -79,9 +79,11 @@ function ErrorList(props) {
     return <div />;
   }
   return (
-    <div>
-      <p />
-      <ul className="error-detail bs-callout bs-callout-info">
+    <div
+      className="ui bottom attached warning message"
+      style={{ display: "block" }}>
+      {/* <i className="icon help"></i> */}
+      <ul className="list error-detail bs-callout bs-callout-info">
         {errors.map((error, index) => {
           return (
             <li className="text-danger" key={index}>
@@ -230,6 +232,7 @@ function SchemaFieldRender(props) {
   const help = uiSchema["ui:help"];
   const hidden = uiSchema["ui:widget"] === "hidden";
   const classNames = [
+    "ui fluid input",
     "form-group",
     "field",
     `field-${type}`,

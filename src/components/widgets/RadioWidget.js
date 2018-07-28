@@ -23,17 +23,19 @@ function RadioWidget(props) {
         const disabledCls = disabled || readonly ? "disabled" : "";
         const radio = (
           <span>
-            <input
-              type="radio"
-              checked={checked}
-              name={name}
-              required={required}
-              value={option.value}
-              disabled={disabled || readonly}
-              autoFocus={autofocus && i === 0}
-              onChange={_ => onChange(option.value)}
-            />
-            <span>{option.label}</span>
+            <div className="ui radio checkbox">
+              <input
+                type="radio"
+                checked={checked}
+                name={name}
+                required={required}
+                value={option.value}
+                disabled={disabled || readonly}
+                autoFocus={autofocus && i === 0}
+                onChange={_ => onChange(option.value)}
+              />
+              <label>{option.label}</label>
+            </div>
           </span>
         );
 

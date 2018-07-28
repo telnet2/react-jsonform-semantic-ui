@@ -205,10 +205,12 @@ class Editor extends Component {
     const icon = this.state.valid ? "ok" : "remove";
     const cls = this.state.valid ? "valid" : "invalid";
     return (
-      <div className="panel panel-default">
+      <div className="ui segment panel panel-default">
         <div className="panel-heading">
-          <span className={`${cls} glyphicon glyphicon-${icon}`} />
-          {" " + title}
+          <h3 className="ui header">
+            <span className={`${cls} glyphicon glyphicon-${icon}`} />
+            {" " + title}
+          </h3>
         </div>
         <CodeMirror
           value={this.state.code}
@@ -241,13 +243,15 @@ class Selector extends Component {
 
   render() {
     return (
-      <ul className="nav nav-pills">
+      <ul className="ui relaxed horizontal list nav nav-pills">
         {Object.keys(samples).map((label, i) => {
           return (
             <li
               key={i}
               role="presentation"
-              className={this.state.current === label ? "active" : ""}>
+              className={
+                this.state.current === label ? "item active" : "item "
+              }>
               <a href="#" onClick={this.onLabelClick(label)}>
                 {label}
               </a>
@@ -406,14 +410,14 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div className="container-fluid">
+      <div className="ui container container-fluid">
         <div className="page-header">
           <h1>react-jsonschema-form</h1>
-          <div className="row">
-            <div className="col-sm-8">
+          <div className="ui grid">
+            <div className="eight wide column col-sm-8">
               <Selector onSelected={this.load} />
             </div>
-            <div className="col-sm-2">
+            <div className="two wide column col-sm-2">
               <Form
                 schema={liveValidateSchema}
                 formData={liveValidate}
@@ -421,75 +425,128 @@ class App extends Component {
                 <div />
               </Form>
             </div>
-            <div className="col-sm-2">
+            <div className="two wide column col-sm-2">
               <ThemeSelector theme={theme} select={this.onThemeSelected} />
             </div>
           </div>
         </div>
-        <div className="col-sm-7">
-          <Editor
-            title="JSONSchema"
-            theme={editor}
-            code={toJson(schema)}
-            onChange={this.onSchemaEdited}
-          />
-          <div className="row">
-            <div className="col-sm-6">
+        <div className="ui grid">
+          <div className="ui row">
+            <div className="ten wide column col-sm-7">
               <Editor
-                title="UISchema"
+                title="JSONSchema"
                 theme={editor}
-                code={toJson(uiSchema)}
-                onChange={this.onUISchemaEdited}
+                code={toJson(schema)}
+                onChange={this.onSchemaEdited}
               />
-            </div>
-            <div className="col-sm-6">
-              <Editor
-                title="formData"
-                theme={editor}
-                code={toJson(formData)}
-                onChange={this.onFormDataEdited}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-5">
-          {this.state.form && (
-            <Form
-              ArrayFieldTemplate={ArrayFieldTemplate}
-              ObjectFieldTemplate={ObjectFieldTemplate}
-              liveValidate={liveValidate}
-              schema={schema}
-              uiSchema={uiSchema}
-              formData={formData}
-              onChange={this.onFormDataChange}
-              onSubmit={({ formData }) =>
-                console.log("submitted formData", formData)
-              }
-              fields={{ geo: GeoPosition }}
-              validate={validate}
-              onBlur={(id, value) =>
-                console.log(`Touched ${id} with value ${value}`)
-              }
-              onFocus={(id, value) =>
-                console.log(`Focused ${id} with value ${value}`)
-              }
-              transformErrors={transformErrors}
-              onError={log("errors")}>
-              <div className="row">
-                <div className="col-sm-3">
-                  <button className="btn btn-primary" type="submit">
-                    Submit
-                  </button>
-                </div>
-                <div className="col-sm-9 text-right">
-                  <CopyLink
-                    shareURL={this.state.shareURL}
-                    onShare={this.onShare}
-                  />
+              <div className="ui grid">
+                <div className="row">
+                  <div className="eight wide column col-sm-6">
+                    <Editor
+                      title="UISchema"
+                      theme={editor}
+                      code={toJson(uiSchema)}
+                      onChange={this.onUISchemaEdited}
+                    />
+                  </div>
+                  <div className="eight wide column col-sm-6">
+                    <Editor
+                      title="formData"
+                      theme={editor}
+                      code={toJson(formData)}
+                      onChange={this.onFormDataEdited}
+                    />
+                  </div>
                 </div>
               </div>
-            </Form>
-          )}
+            </div>
+            <div className="six wide column col-sm-5">
+              {this.state.form && (
+                <Form
+                  className="ui form"
+                  ArrayFieldTemplate={ArrayFieldTemplate}
+                  ObjectFieldTemplate={ObjectFieldTemplate}
+                  liveValidate={liveValidate}
+                  schema={schema}
+                  uiSchema={uiSchema}
+                  formData={formData}
+                  onChange={this.onFormDataChange}
+                  onSubmit={({ formData }) =>
+                    console.log("submitted formData", formData)
+                  }
+                  fields={{ geo: GeoPosition }}
+                  validate={validate}
+                  onBlur={(id, value) =>
+                    console.log(`Touched ${id} with value ${value}`)
+                  }
+                  onFocus={(id, value) =>
+                    console.log(`Focused ${id} with value ${value}`)
+                  }
+                  transformErrors={transformErrors}
+                  onError={log("errors")}>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <button
+                        className="ui primary button btn btn-primary"
+                        type="submit">
+                        Submit
+                      </button>
+                    </div>
+                    <div className="col-sm-9 text-right">
+                      <CopyLink
+                        shareURL={this.state.shareURL}
+                        onShare={this.onShare}
+                      />
+                    </div>
+                  </div>
+                </Form>
+              )}
+            </div>
+          </div>
+          <div className="ui row">
+            <div className="sixteen wide column">
+              {this.state.form && (
+                <Form
+                  className="ui form"
+                  ArrayFieldTemplate={ArrayFieldTemplate}
+                  ObjectFieldTemplate={ObjectFieldTemplate}
+                  liveValidate={liveValidate}
+                  schema={schema}
+                  uiSchema={uiSchema}
+                  formData={formData}
+                  onChange={this.onFormDataChange}
+                  onSubmit={({ formData }) =>
+                    console.log("submitted formData", formData)
+                  }
+                  fields={{ geo: GeoPosition }}
+                  validate={validate}
+                  onBlur={(id, value) =>
+                    console.log(`Touched ${id} with value ${value}`)
+                  }
+                  onFocus={(id, value) =>
+                    console.log(`Focused ${id} with value ${value}`)
+                  }
+                  transformErrors={transformErrors}
+                  onError={log("errors")}>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <button
+                        className="ui primary button btn btn-primary"
+                        type="submit">
+                        Submit
+                      </button>
+                    </div>
+                    <div className="col-sm-9 text-right">
+                      <CopyLink
+                        shareURL={this.state.shareURL}
+                        onShare={this.onShare}
+                      />
+                    </div>
+                  </div>
+                </Form>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );

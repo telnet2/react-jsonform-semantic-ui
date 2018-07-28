@@ -29,17 +29,22 @@ function BaseInput(props) {
   };
 
   return (
-    <input
-      className="form-control"
-      readOnly={readonly}
-      disabled={disabled}
-      autoFocus={autofocus}
-      value={value == null ? "" : value}
-      {...inputProps}
-      onChange={_onChange}
-      onBlur={onBlur && (event => onBlur(inputProps.id, event.target.value))}
-      onFocus={onFocus && (event => onFocus(inputProps.id, event.target.value))}
-    />
+    <div className="ui input">
+      <input
+        className="form-control"
+        //   className="ui input"
+        readOnly={readonly}
+        disabled={disabled}
+        autoFocus={autofocus}
+        value={value == null ? "" : value}
+        {...inputProps}
+        onChange={_onChange}
+        onBlur={onBlur && (event => onBlur(inputProps.id, event.target.value))}
+        onFocus={
+          onFocus && (event => onFocus(inputProps.id, event.target.value))
+        }
+      />
+    </div>
   );
 }
 

@@ -1,21 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>react-jsonschema-form playground</title>
-  <link rel="stylesheet" id="theme" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>react-jsonschema-form playground</title>
+    <!-- <link rel="stylesheet" id="theme" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
+    <style>
+        .help-block {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            color: #737373;
+        }
+
+        fieldset {
+            min-width: 0;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            width: 100%;
+        }
+
+        .ui.form .field>label {
+            margin-right: 1em;
+        }
+
+        .ui.form .grouped.fields {
+            margin-bottom: 0px;
+        }
+        .checkbox {
+            margin-right: 0.5em;
+        }
+
+        .ui.grid>.column:not(.row) {
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+        }
+
+        .ui.field {
+            align-items: center;
+            margin-right: 1em;
+        }
+
+        .ui.search.dropdown {
+            height: auto;
+        }
+
+        .add-button {
+            cursor: pointer;
+            float: right;
+        }
+
+        .array-item-toolbox {
+            width: 100px;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="app"></div>
-  <p style="text-align:center">
-    Powered by
-    <a href="https://github.com/mozilla-services/react-jsonschema-form">react-jsonschema-form</a>.
-    Bootstrap themes courtsesy of
-    <a href="http://bootswatch.com/">Bootswatch</a> and
-    <a href="https://github.com/aalpern/bootstrap-solarized/">bootstrap-solarized</a>.
-  </p>
-  <script src="/static/bundle.js"></script>
+    <div id="app"></div>
+    <p style="text-align:center">
+        Powered by
+        <a href="https://github.com/mozilla-services/react-jsonschema-form">react-jsonschema-form</a>. Bootstrap themes courtsesy of
+        <a href="http://bootswatch.com/">Bootswatch</a> and
+        <a href="https://github.com/aalpern/bootstrap-solarized/">bootstrap-solarized</a>.
+    </p>
+    <script src="/static/bundle.js"></script>
 </body>
+
 </html>

@@ -55,7 +55,7 @@ function SelectWidget(props) {
     <select
       id={id}
       multiple={multiple}
-      className="form-control"
+      className="ui search dropdown"
       value={typeof value === "undefined" ? emptyValue : value}
       required={required}
       disabled={disabled || readonly}
