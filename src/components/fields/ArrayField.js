@@ -111,12 +111,7 @@ function DefaultArrayItem(props) {
     }
     return (
         <div key={props.index} className={props.className}>
-            <div
-                className={
-                    props.hasToolbar
-                        ? "ui fluid input"
-                        : "sixteen wide column col-xs-12"
-                }>
+            <div className="ui fluid input">
                 {props.children}
                 {toolbar}
             </div>
@@ -148,14 +143,6 @@ function DefaultFixedArrayFieldTemplate(props) {
             )}
 
             {props.items && props.items.map(DefaultArrayItem)}
-
-            {props.canAdd &&
-                false && (
-                    <AddButton
-                        onClick={props.onAddClick}
-                        disabled={props.disabled || props.readonly}
-                    />
-                )}
         </fieldset>
     );
 }
@@ -186,19 +173,7 @@ function DefaultNormalArrayFieldTemplate(props) {
                 />
             )}
 
-            <div
-                className="ui segments"
-                key={`array-item-list-${props.idSchema.$id}`}>
-                {props.items && props.items.map(DefaultArrayItem)}
-            </div>
-
-            {props.canAdd &&
-                false && (
-                    <AddButton
-                        onClick={props.onAddClick}
-                        disabled={props.disabled || props.readonly}
-                    />
-                )}
+            {props.items && props.items.map(DefaultArrayItem)}
         </fieldset>
     );
 }
@@ -707,25 +682,6 @@ class ArrayField extends Component {
             readonly,
         };
     }
-}
-
-function AddButton({ onClick, disabled }) {
-    return (
-        <div className="row">
-            <div className="right aligned sixteen wide column">
-                <p className="col-xs-3 col-xs-offset-9 array-item-add text-right">
-                    <IconBtn
-                        type="info"
-                        icon="plus plus icon"
-                        className="btn-add col-xs-12"
-                        tabIndex="0"
-                        onClick={onClick}
-                        disabled={disabled}
-                    />
-                </p>
-            </div>
-        </div>
-    );
 }
 
 if (process.env.NODE_ENV !== "production") {
