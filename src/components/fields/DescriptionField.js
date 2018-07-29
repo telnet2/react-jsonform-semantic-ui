@@ -5,7 +5,7 @@ function DescriptionField(props) {
   const { id, description } = props;
   if (!description) {
     // See #312: Ensure compatibility with old versions of React.
-    return <div />;
+    return null;
   }
   if (typeof description === "string") {
     return (

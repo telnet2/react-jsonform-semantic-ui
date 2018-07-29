@@ -20,7 +20,7 @@ import {
 function ArrayFieldTitle({ TitleField, idSchema, title, required, ...props }) {
   if (!title) {
     // See #312: Ensure compatibility with old versions of React.
-    return <div />;
+    return null;
   }
   const id = `${idSchema.$id}__title`;
   return <TitleField id={id} title={title} required={required} {...props} />;
@@ -29,7 +29,7 @@ function ArrayFieldTitle({ TitleField, idSchema, title, required, ...props }) {
 function ArrayFieldDescription({ DescriptionField, idSchema, description }) {
   if (!description) {
     // See #312: Ensure compatibility with old versions of React.
-    return <div />;
+    return null;
   }
   const id = `${idSchema.$id}__description`;
   return <DescriptionField id={id} description={description} />;
@@ -55,65 +55,64 @@ function DefaultArrayItem(props) {
     paddingRight: 6,
     fontWeight: "bold",
   };
+  const schema = props.children.props.schema;
+  const hasLabel = schema.title || schema.type === "object";
+
   const toolbar = props.hasToolbar && (
-    <div className="array-item-toolbox">
-      <div className="ui icon buttons btn-group">
-        {/* style={{
+    <div className="ui icon buttons btn-group">
+      {hasLabel && <div style={{ height: "19px" }} />}
+      {/* style={{
                     display: "flex",
                     justifyContent: "space-around",
                 }}> */}
-        {(props.hasMoveUp || props.hasMoveDown) && (
-          <IconBtn
-            icon="arrow-up arrow up icon"
-            className="array-item-move-up"
-            tabIndex="-1"
-            style={btnStyle}
-            disabled={props.disabled || props.readonly || !props.hasMoveUp}
-            onClick={props.onReorderClick(props.index, props.index - 1)}
-          />
-        )}
+      {(props.hasMoveUp || props.hasMoveDown) && (
+        <IconBtn
+          icon="arrow-up arrow up icon"
+          className="array-item-move-up"
+          tabIndex="-1"
+          style={btnStyle}
+          disabled={props.disabled || props.readonly || !props.hasMoveUp}
+          onClick={props.onReorderClick(props.index, props.index - 1)}
+        />
+      )}
 
-        {(props.hasMoveUp || props.hasMoveDown) && (
-          <IconBtn
-            icon="arrow-down arrow down icon"
-            className="array-item-move-down"
-            tabIndex="-1"
-            style={btnStyle}
-            disabled={props.disabled || props.readonly || !props.hasMoveDown}
-            onClick={props.onReorderClick(props.index, props.index + 1)}
-          />
-        )}
+      {(props.hasMoveUp || props.hasMoveDown) && (
+        <IconBtn
+          icon="arrow-down arrow down icon"
+          className="array-item-move-down"
+          tabIndex="-1"
+          style={btnStyle}
+          disabled={props.disabled || props.readonly || !props.hasMoveDown}
+          onClick={props.onReorderClick(props.index, props.index + 1)}
+        />
+      )}
 
-        {props.hasRemove && (
-          <IconBtn
-            type="danger"
-            icon="remove eraser icon"
-            className="array-item-remove"
-            tabIndex="-1"
-            style={btnStyle}
-            disabled={props.disabled || props.readonly}
-            onClick={props.onDropIndexClick(props.index)}
-          />
-        )}
-      </div>
+      {props.hasRemove && (
+        <IconBtn
+          type="danger"
+          icon="remove eraser icon"
+          className="array-item-remove"
+          tabIndex="-1"
+          style={btnStyle}
+          disabled={props.disabled || props.readonly}
+          onClick={props.onDropIndexClick(props.index)}
+        />
+      )}
     </div>
   );
-
+  if (props.children.props.schema.type === "object" && props.hasToolbar) {
+    // console.log("add toolbar", props.children.props.schema);
+    // props.children.props.schema.$toolbar = toolbar;
+    // console.log(props.children.props);
+  }
   return (
     <div key={props.index} className={props.className}>
-      <div className="ui vertical segment">
-        <div className="ui grid">
-          <div
-            className={
-              props.hasToolbar
-                ? "ui fluid input col-xs-9"
-                : "sixteen wide column col-xs-12"
-            }>
-            {/* <div className="ui top attached label">Code</div> */}
-            {props.children}
-            {toolbar}
-          </div>
-        </div>
+      <div
+        className={
+          props.hasToolbar ? "ui fluid input" : "sixteen wide column col-xs-12"
+        }>
+        {props.children}
+        {toolbar}
       </div>
     </div>
   );
@@ -121,86 +120,78 @@ function DefaultArrayItem(props) {
 
 function DefaultFixedArrayFieldTemplate(props) {
   return (
-    <div className="ui fluid input segment">
-      <fieldset className={props.className}>
-        <ArrayFieldTitle
-          key={`array-field-title-${props.idSchema.$id}`}
-          TitleField={props.TitleField}
-          idSchema={props.idSchema}
-          title={props.uiSchema["ui:title"] || props.title}
-          required={props.required}
-          disabled={props.disabled}
-          canAdd={props.canAdd}
-          onAddClick={props.onAddClick}
-        />
+    <fieldset className={props.className}>
+      <ArrayFieldTitle
+        key={`array-field-title-${props.idSchema.$id}`}
+        TitleField={props.TitleField}
+        idSchema={props.idSchema}
+        title={props.uiSchema["ui:title"] || props.title}
+        required={props.required}
+        disabled={props.disabled}
+        canAdd={props.canAdd}
+        onAddClick={props.onAddClick}
+      />
 
-        {(props.uiSchema["ui:description"] || props.schema.description) && (
-          <div
-            className="field-description"
-            key={`field-description-${props.idSchema.$id}`}>
-            {props.uiSchema["ui:description"] || props.schema.description}
-          </div>
-        )}
-
+      {(props.uiSchema["ui:description"] || props.schema.description) && (
         <div
-          className="row array-item-list"
-          key={`array-item-list-${props.idSchema.$id}`}>
-          {props.items && props.items.map(DefaultArrayItem)}
+          className="field-description"
+          key={`field-description-${props.idSchema.$id}`}>
+          {props.uiSchema["ui:description"] || props.schema.description}
         </div>
+      )}
 
-        {props.canAdd &&
-          false && (
-            <AddButton
-              onClick={props.onAddClick}
-              disabled={props.disabled || props.readonly}
-            />
-          )}
-      </fieldset>
-    </div>
+      {props.items && props.items.map(DefaultArrayItem)}
+
+      {props.canAdd &&
+        false && (
+          <AddButton
+            onClick={props.onAddClick}
+            disabled={props.disabled || props.readonly}
+          />
+        )}
+    </fieldset>
   );
 }
 
 function DefaultNormalArrayFieldTemplate(props) {
   return (
-    <div className="ui attached segment">
-      <fieldset className={props.className}>
-        <ArrayFieldTitle
-          key={`array-field-title-${props.idSchema.$id}`}
-          TitleField={props.TitleField}
-          idSchema={props.idSchema}
-          title={props.uiSchema["ui:title"] || props.title}
-          required={props.required}
-          disabled={props.disabled}
-          canAdd={props.canAdd}
-          onAddClick={props.onAddClick}
-        />
+    <fieldset className={props.className}>
+      <ArrayFieldTitle
+        key={`array-field-title-${props.idSchema.$id}`}
+        TitleField={props.TitleField}
+        idSchema={props.idSchema}
+        title={props.uiSchema["ui:title"] || props.title}
+        required={props.required}
+        disabled={props.disabled}
+        canAdd={props.canAdd}
+        onAddClick={props.onAddClick}
+      />
 
-        {(props.uiSchema["ui:description"] || props.schema.description) && (
-          <ArrayFieldDescription
-            key={`array-field-description-${props.idSchema.$id}`}
-            DescriptionField={props.DescriptionField}
-            idSchema={props.idSchema}
-            description={
-              props.uiSchema["ui:description"] || props.schema.description
-            }
+      {(props.uiSchema["ui:description"] || props.schema.description) && (
+        <ArrayFieldDescription
+          key={`array-field-description-${props.idSchema.$id}`}
+          DescriptionField={props.DescriptionField}
+          idSchema={props.idSchema}
+          description={
+            props.uiSchema["ui:description"] || props.schema.description
+          }
+        />
+      )}
+
+      <div
+        className="ui segments"
+        key={`array-item-list-${props.idSchema.$id}`}>
+        {props.items && props.items.map(DefaultArrayItem)}
+      </div>
+
+      {props.canAdd &&
+        false && (
+          <AddButton
+            onClick={props.onAddClick}
+            disabled={props.disabled || props.readonly}
           />
         )}
-
-        <div
-          className="row array-item-list"
-          key={`array-item-list-${props.idSchema.$id}`}>
-          {props.items && props.items.map(p => DefaultArrayItem(p))}
-        </div>
-
-        {props.canAdd &&
-          false && (
-            <AddButton
-              onClick={props.onAddClick}
-              disabled={props.disabled || props.readonly}
-            />
-          )}
-      </fieldset>
-    </div>
+    </fieldset>
   );
 }
 
@@ -246,7 +237,6 @@ class ArrayField extends Component {
   }
 
   onAddClick = event => {
-    console.log(event);
     event.preventDefault();
     const { schema, formData, registry = getDefaultRegistry() } = this.props;
     const { definitions } = registry;

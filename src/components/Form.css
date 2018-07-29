@@ -13,8 +13,32 @@ fieldset {
     width: 100%;
 }
 
+.ui.segments {
+    border: 0px solid transparent;
+    box-shadow: 0 0 0 0;
+}
+
+.ui.form .field {
+    flex-grow: 1;
+    margin: 0em;
+}
+
 .ui.form .field>label {
-    margin-right: 1em;
+    margin-bottom: 0px;
+}
+
+/* .ui.field.field-object > fieldset {
+    border-left: 1pt solid lightpink;
+    padding-left: 1em;
+} */
+
+.ui.buttons {
+    display: inline;
+    padding-bottom: 1em;
+}
+
+.ui.form .field:last-child, .ui.form .fields:last-child .field {
+    /* padding-bottom: 1em; */
 }
 
 .ui.form .grouped.fields {
@@ -29,6 +53,10 @@ fieldset {
     padding-bottom: 0.2rem;
 }
 
+.ui.form-group {
+    padding-bottom: 1em;
+}
+
 .ui.field {
     align-items: center;
     margin-right: 1em;
@@ -41,6 +69,13 @@ fieldset {
 .add-button {
     cursor: pointer;
     float: right;
+}
+
+.array-item {
+    padding-left: 1em;
+    border-left: 1px solid lightgrey;
+    margin-left: 8pt;
+    /* padding-bottom: 1em; */
 }
 
 .array-item-toolbox {

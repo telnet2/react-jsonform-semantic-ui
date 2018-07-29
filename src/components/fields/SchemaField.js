@@ -51,7 +51,7 @@ function Label(props) {
   const { label, required, id } = props;
   if (!label) {
     // See #312: Ensure compatibility with old versions of React.
-    return <div />;
+    return null;
   }
   return (
     <label className="control-label" htmlFor={id}>
@@ -65,7 +65,7 @@ function Help(props) {
   const { help } = props;
   if (!help) {
     // See #312: Ensure compatibility with old versions of React.
-    return <div />;
+    return null;
   }
   if (typeof help === "string") {
     return <p className="help-block">{help}</p>;
@@ -76,7 +76,7 @@ function Help(props) {
 function ErrorList(props) {
   const { errors = [] } = props;
   if (errors.length === 0) {
-    return <div />;
+    return null;
   }
   return (
     <div
@@ -182,7 +182,7 @@ function SchemaFieldRender(props) {
 
   if (Object.keys(schema).length === 0) {
     // See #312: Ensure compatibility with old versions of React.
-    return <div />;
+    return null;
   }
 
   const uiOptions = getUiOptions(uiSchema);
@@ -232,7 +232,7 @@ function SchemaFieldRender(props) {
   const help = uiSchema["ui:help"];
   const hidden = uiSchema["ui:widget"] === "hidden";
   const classNames = [
-    "ui fluid input",
+    "ui",
     "form-group",
     "field",
     `field-${type}`,

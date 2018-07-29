@@ -27,7 +27,6 @@ function BaseInput(props) {
   const _onChange = ({ target: { value } }) => {
     return props.onChange(value === "" ? options.emptyValue : value);
   };
-
   return (
     <div className="ui input">
       <input
@@ -44,6 +43,7 @@ function BaseInput(props) {
           onFocus && (event => onFocus(inputProps.id, event.target.value))
         }
       />
+      {props.children}
     </div>
   );
 }
