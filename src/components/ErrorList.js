@@ -4,7 +4,7 @@ export default function ErrorList(props) {
   const { errors } = props;
   return (
     <div className="ui negative message panel panel-danger errors">
-      <i class="close icon" />
+      <i className="close icon" />
       <div className="panel-heading">
         <h3 className="header panel-title">Errors</h3>
       </div>

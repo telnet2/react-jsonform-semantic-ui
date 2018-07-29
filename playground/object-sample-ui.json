@@ -1,0 +1,23 @@
+{
+    "ui:order": [
+        "firstName",
+        "lastName",
+        "*",
+        "password",
+        "location"
+    ],
+    "age": {
+        "ui:widget": "updown"
+    },
+    "bio": {
+        "ui:widget": "textarea"
+    },
+    "password": {
+        "ui:widget": "password"
+    },
+    "location": {
+        "ui:order": [
+            "latitude", "longitude"
+        ]
+    }
+}

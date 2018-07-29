@@ -266,7 +266,19 @@ export function orderProperties(properties, order) {
 
   const arrayToHash = arr =>
     arr.reduce((prev, curr) => {
-      prev[curr] = true;
+      if (Array.isArray(curr)) {
+        curr.forEach(v => {
+          if (prev[v] === true) {
+            throw new Error("uiSchema order list contains duplicates");
+          }
+          prev[v] = true;
+        });
+      } else {
+        if (prev[curr] === true) {
+          throw new Error("uiSchema order list contains duplicates");
+        }
+        prev[curr] = true;
+      }
       return prev;
     }, {});
   const errorPropList = arr =>
@@ -275,7 +287,9 @@ export function orderProperties(properties, order) {
       : `property '${arr[0]}'`;
   const propertyHash = arrayToHash(properties);
   const orderHash = arrayToHash(order);
-  const extraneous = order.filter(prop => prop !== "*" && !propertyHash[prop]);
+  const extraneous = Object.keys(orderHash).filter(
+    prop => prop !== "*" && !propertyHash[prop]
+  );
   if (extraneous.length) {
     throw new Error(
       `uiSchema order list contains extraneous ${errorPropList(extraneous)}`

@@ -6,7 +6,17 @@ import {
   retrieveSchema,
   getDefaultRegistry,
 } from "../../utils";
-
+const numbers = [
+  "",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+];
 function DefaultObjectFieldTemplate(props) {
   const { TitleField, DescriptionField } = props;
   return (
@@ -26,7 +36,20 @@ function DefaultObjectFieldTemplate(props) {
           formContext={props.formContext}
         />
       )}
-      {props.properties.map(prop => prop.content)}
+      {props.properties.map((prop, i) => {
+        if (Array.isArray(prop)) {
+          let n = "";
+          if (prop.length < numbers.length) {
+            n = numbers[prop.length];
+          }
+          return (
+            <div key={i} className={`${n} fields`}>
+              {prop.map(e => e.content)}
+            </div>
+          );
+        }
+        return prop.content;
+      })}
     </fieldset>
   );
 }
@@ -87,6 +110,14 @@ class ObjectField extends Component {
 
     try {
       const properties = Object.keys(schema.properties);
+      if (uiSchema["ui:order"]) {
+        uiSchema["ui:order"] = uiSchema["ui:order"].map(e => {
+          if (Array.isArray(e) && e.length === 1) {
+            return e[0];
+          }
+          return e;
+        });
+      }
       orderedProperties = orderProperties(properties, uiSchema["ui:order"]);
     } catch (err) {
       return (
@@ -102,37 +133,44 @@ class ObjectField extends Component {
 
     const Template = registry.ObjectFieldTemplate || DefaultObjectFieldTemplate;
 
+    const makeSchemaField = name => {
+      return {
+        content: (
+          <SchemaField
+            key={name}
+            name={name}
+            required={this.isRequired(name)}
+            schema={schema.properties[name]}
+            uiSchema={uiSchema[name]}
+            errorSchema={errorSchema[name]}
+            idSchema={idSchema[name]}
+            idPrefix={idPrefix}
+            formData={formData[name]}
+            onChange={this.onPropertyChange(name)}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            registry={registry}
+            disabled={disabled}
+            readonly={readonly}
+          />
+        ),
+        name,
+        readonly,
+        disabled,
+        required,
+      };
+    };
+
     const templateProps = {
       title: uiSchema["ui:title"] || title,
       description,
       TitleField,
       DescriptionField,
       properties: orderedProperties.map(name => {
-        return {
-          content: (
-            <SchemaField
-              key={name}
-              name={name}
-              required={this.isRequired(name)}
-              schema={schema.properties[name]}
-              uiSchema={uiSchema[name]}
-              errorSchema={errorSchema[name]}
-              idSchema={idSchema[name]}
-              idPrefix={idPrefix}
-              formData={formData[name]}
-              onChange={this.onPropertyChange(name)}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              registry={registry}
-              disabled={disabled}
-              readonly={readonly}
-            />
-          ),
-          name,
-          readonly,
-          disabled,
-          required,
-        };
+        if (name.map) {
+          return name.map(makeSchemaField);
+        }
+        return makeSchemaField(name);
       }),
       required,
       idSchema,
