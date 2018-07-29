@@ -9,13 +9,13 @@ import TitleField from "./TitleField";
 import UnsupportedField from "./UnsupportedField";
 
 export default {
-  ArrayField,
-  BooleanField,
-  DescriptionField,
-  NumberField,
-  ObjectField,
-  SchemaField,
-  StringField,
-  TitleField,
-  UnsupportedField,
+    ArrayField,
+    BooleanField,
+    DescriptionField,
+    NumberField,
+    ObjectField,
+    SchemaField,
+    StringField,
+    TitleField,
+    UnsupportedField,
 };

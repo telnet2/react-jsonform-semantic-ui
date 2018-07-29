@@ -5,52 +5,52 @@ import DescriptionField from "../src/components/fields/DescriptionField";
 import { createSandbox, createComponent } from "./test_utils";
 
 describe("DescriptionField", () => {
-  let sandbox;
+    let sandbox;
 
-  beforeEach(() => {
-    sandbox = createSandbox();
-  });
+    beforeEach(() => {
+        sandbox = createSandbox();
+    });
 
-  afterEach(() => {
-    sandbox.restore();
-  });
+    afterEach(() => {
+        sandbox.restore();
+    });
 
-  // For some reason, stateless components needs to be wrapped into a stateful
-  // one to be rendered into the document.
-  class DescriptionFieldWrapper extends React.Component {
-    constructor(props) {
-      super(props);
+    // For some reason, stateless components needs to be wrapped into a stateful
+    // one to be rendered into the document.
+    class DescriptionFieldWrapper extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return <DescriptionField {...this.props} />;
+        }
     }
-    render() {
-      return <DescriptionField {...this.props} />;
-    }
-  }
 
-  it("should return a div for a custom component", () => {
-    const props = {
-      description: <em>description</em>,
-    };
-    const { node } = createComponent(DescriptionFieldWrapper, props);
+    it("should return a div for a custom component", () => {
+        const props = {
+            description: <em>description</em>,
+        };
+        const { node } = createComponent(DescriptionFieldWrapper, props);
 
-    expect(node.tagName).to.equal("DIV");
-  });
+        expect(node.tagName).to.equal("DIV");
+    });
 
-  it("should return a p for a description text", () => {
-    const props = {
-      description: "description",
-    };
-    const { node } = createComponent(DescriptionFieldWrapper, props);
+    it("should return a p for a description text", () => {
+        const props = {
+            description: "description",
+        };
+        const { node } = createComponent(DescriptionFieldWrapper, props);
 
-    expect(node.tagName).to.equal("P");
-  });
+        expect(node.tagName).to.equal("P");
+    });
 
-  it("should have the expected id", () => {
-    const props = {
-      description: "Field description",
-      id: "sample_id",
-    };
-    const { node } = createComponent(DescriptionFieldWrapper, props);
+    it("should have the expected id", () => {
+        const props = {
+            description: "Field description",
+            id: "sample_id",
+        };
+        const { node } = createComponent(DescriptionFieldWrapper, props);
 
-    expect(node.id).to.equal("sample_id");
-  });
+        expect(node.id).to.equal("sample_id");
+    });
 });
