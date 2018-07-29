@@ -27,6 +27,10 @@ fieldset {
     margin-bottom: 0px;
 }
 
+.ui.form .fields {
+    margin: 0 -0.5em;
+}
+
 /* .ui.field.field-object > fieldset {
     border-left: 1pt solid lightpink;
     padding-left: 1em;

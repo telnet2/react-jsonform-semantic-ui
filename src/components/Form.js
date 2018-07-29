@@ -206,7 +206,7 @@ export default class Form extends Component {
 
         return (
             <form
-                className={className ? className : "rjsf"}
+                className={className ? className : "ui form"}
                 id={id}
                 name={name}
                 method={method}
