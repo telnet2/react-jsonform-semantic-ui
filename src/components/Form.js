@@ -51,9 +51,9 @@ export default class Form extends Component {
         const { errors, errorSchema } = mustValidate
             ? this.validate(formData, schema)
             : {
-                  errors: state.errors || [],
-                  errorSchema: state.errorSchema || {},
-              };
+                errors: state.errors || [],
+                errorSchema: state.errorSchema || {},
+            };
         const idSchema = toIdSchema(
             retrievedSchema,
             uiSchema["ui:rootFieldId"],
@@ -234,12 +234,12 @@ export default class Form extends Component {
                 {children ? (
                     children
                 ) : (
-                    <p>
-                        <button type="submit" className="btn btn-info">
-                            Submit
-                        </button>
-                    </p>
-                )}
+                        <p>
+                            <button type="submit" className="ui primary button">
+                                Submit
+                            </button>
+                        </p>
+                    )}
             </form>
         );
     }
