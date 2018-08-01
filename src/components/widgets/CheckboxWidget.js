@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DescriptionField from "../fields/DescriptionField.js";
+// import DescriptionField from "../fields/DescriptionField.js";
 
 function CheckboxWidget(props) {
     const {
@@ -14,18 +14,26 @@ function CheckboxWidget(props) {
         autofocus,
         onChange,
     } = props;
+
+    const viewonly = disabled || readonly;
+    // const description = {
+    //     dataTooltip: schema.description,
+    //     dataPosition: 'top center'
+    // }
     return (
         <div
-            className={`ui checkbox ${disabled || readonly ? "disabled" : ""}`}>
-            {schema.description && (
+            className={`ui checkbox ${viewonly ? "disabled" : ""}`}
+            data-tooltip={schema.description}
+            data-position="top left">
+            {/* {schema.description && (
                 <DescriptionField description={schema.description} />
-            )}
+            )} */}
             <input
                 type="checkbox"
                 id={id}
                 checked={typeof value === "undefined" ? false : value}
                 required={required}
-                disabled={disabled || readonly}
+                disabled={viewonly}
                 autoFocus={autofocus}
                 onChange={event => onChange(event.target.checked)}
             />
