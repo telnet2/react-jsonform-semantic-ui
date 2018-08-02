@@ -43,7 +43,7 @@ function DefaultObjectFieldTemplate(props) {
                         n = numbers[prop.length];
                     }
                     return (
-                        <div key={i} className={`${n} fields`}>
+                        <div key={i} className={`${n} fields unstackable`}>
                             {prop.map(e => e.content)}
                         </div>
                     );
