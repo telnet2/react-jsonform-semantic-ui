@@ -5,7 +5,7 @@ function CurrencyWidget(props) {
     const { BaseInput } = props.registry.widgets;
     return (
         <BaseInput
-            className="ui right labeled input"
+            className="ui labeled input"
             startAdornment={
                 <label htmlFor={props.id} className="ui label">
                     $

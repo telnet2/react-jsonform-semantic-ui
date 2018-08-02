@@ -30,7 +30,7 @@ class ImageWidget extends React.PureComponent {
         const { id, value } = props;
         const imageId = `${id}_preview`;
         return (
-            <div className="ui segment">
+            <div className="ui segment" style={{ margin: 0 }}>
                 <BaseInput className="ui action input" {...props}>
                     <button
                         className="ui button"
