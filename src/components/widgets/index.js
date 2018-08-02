@@ -3,6 +3,8 @@ import AltDateTimeWidget from "./AltDateTimeWidget";
 import BaseInput from "./BaseInput";
 import CheckboxWidget from "./CheckboxWidget";
 import CheckboxesWidget from "./CheckboxesWidget";
+import CurrencyWidget from "./CurrencyWidget";
+import ImageWidget from "./ImageWidget";
 import ColorWidget from "./ColorWidget";
 import DateWidget from "./DateWidget";
 import DateTimeWidget from "./DateTimeWidget";
@@ -38,4 +40,6 @@ export default {
     FileWidget,
     CheckboxWidget,
     CheckboxesWidget,
+    CurrencyWidget,
+    ImageWidget,
 };

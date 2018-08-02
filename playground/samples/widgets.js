@@ -17,6 +17,20 @@ module.exports = {
                         type: "string",
                         format: "uri",
                     },
+                    imageURL: {
+                        type: "string",
+                        format: "image-url",
+                    },
+                },
+            },
+            numberFormats: {
+                type: "object",
+                title: "Number formats",
+                properties: {
+                    price: {
+                        type: "number",
+                        format: "currency",
+                    },
                 },
             },
             boolean: {
@@ -159,6 +173,9 @@ module.exports = {
         stringFormats: {
             email: "chuck@norris.net",
             uri: "http://chucknorris.com/",
+        },
+        numberFormats: {
+            price: 13.24,
         },
         boolean: {
             default: true,

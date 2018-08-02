@@ -521,57 +521,6 @@ class App extends Component {
                             )}
                         </div>
                     </div>
-                    <div className="ui row">
-                        <div className="sixteen wide column">
-                            {this.state.form && (
-                                <Form
-                                    className="ui form"
-                                    ArrayFieldTemplate={ArrayFieldTemplate}
-                                    ObjectFieldTemplate={ObjectFieldTemplate}
-                                    liveValidate={liveValidate}
-                                    schema={schema}
-                                    uiSchema={uiSchema}
-                                    formData={formData}
-                                    onChange={this.onFormDataChange}
-                                    onSubmit={({ formData }) =>
-                                        console.log(
-                                            "submitted formData",
-                                            formData
-                                        )
-                                    }
-                                    fields={{ geo: GeoPosition }}
-                                    validate={validate}
-                                    onBlur={(id, value) =>
-                                        console.log(
-                                            `Touched ${id} with value ${value}`
-                                        )
-                                    }
-                                    onFocus={(id, value) =>
-                                        console.log(
-                                            `Focused ${id} with value ${value}`
-                                        )
-                                    }
-                                    transformErrors={transformErrors}
-                                    onError={log("errors")}>
-                                    <div className="row">
-                                        <div className="col-sm-3">
-                                            <button
-                                                className="ui primary button btn btn-primary"
-                                                type="submit">
-                                                Submit
-                                            </button>
-                                        </div>
-                                        <div className="col-sm-9 text-right">
-                                            <CopyLink
-                                                shareURL={this.state.shareURL}
-                                                onShare={this.onShare}
-                                            />
-                                        </div>
-                                    </div>
-                                </Form>
-                            )}
-                        </div>
-                    </div>
                 </div>
             </div>
         );
