@@ -18,7 +18,7 @@ function CurrencyWidget(props) {
 
 if (process.env.NODE_ENV !== "production") {
     CurrencyWidget.propTypes = {
-        value: PropTypes.number,
+        value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         id: PropTypes.string,
     };
 }
