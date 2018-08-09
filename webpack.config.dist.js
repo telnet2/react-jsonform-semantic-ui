@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: "./dist",
         publicPath: "/dist/",
-        filename: "react-jsonschema-form.js",
+        filename: "jsonform.js",
         library: "JSONSchemaForm",
         libraryTarget: "umd"
     },
