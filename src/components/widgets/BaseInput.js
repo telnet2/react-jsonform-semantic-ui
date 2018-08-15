@@ -9,6 +9,8 @@ function BaseInput(props) {
         throw new Error(`no id for props ${JSON.stringify(props)}`);
     }
     const {
+        className,
+        children,
         value,
         readonly,
         disabled,
@@ -20,6 +22,7 @@ function BaseInput(props) {
         formContext,
         registry,
         rawErrors,
+        startAdornment,
         ...inputProps
     } = props;
 
@@ -28,10 +31,10 @@ function BaseInput(props) {
         return props.onChange(value === "" ? options.emptyValue : value);
     };
     return (
-        <div className="ui input">
+        <div className={className || "ui input"}>
+            {startAdornment}
             <input
                 className="form-control"
-                //   className="ui input"
                 readOnly={readonly}
                 disabled={disabled}
                 autoFocus={autofocus}
@@ -47,7 +50,7 @@ function BaseInput(props) {
                     (event => onFocus(inputProps.id, event.target.value))
                 }
             />
-            {props.children}
+            {children}
         </div>
     );
 }
@@ -60,19 +63,18 @@ BaseInput.defaultProps = {
     autofocus: false,
 };
 
-if (process.env.NODE_ENV !== "production") {
-    BaseInput.propTypes = {
-        id: PropTypes.string.isRequired,
-        placeholder: PropTypes.string,
-        value: PropTypes.any,
-        required: PropTypes.bool,
-        disabled: PropTypes.bool,
-        readonly: PropTypes.bool,
-        autofocus: PropTypes.bool,
-        onChange: PropTypes.func,
-        onBlur: PropTypes.func,
-        onFocus: PropTypes.func,
-    };
-}
+BaseInput.propTypes = {
+    id: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.any,
+    required: PropTypes.bool,
+    disabled: PropTypes.bool,
+    readonly: PropTypes.bool,
+    autofocus: PropTypes.bool,
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    startAdornment: PropTypes.object,
+};
 
 export default BaseInput;
