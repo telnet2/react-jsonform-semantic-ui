@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Dropzone from "react-dropzone";
 
 function previewImage(srcId, imageId) {
     const srcEl = document.getElementById(srcId);
@@ -13,6 +14,8 @@ function previewImage(srcId, imageId) {
 }
 
 class ImageWidget extends React.PureComponent {
+    state = {};
+
     componentDidMount() {
         const imageId = `${this.props.id}_preview`;
         const imgEl = document.getElementById(imageId);
@@ -24,19 +27,82 @@ class ImageWidget extends React.PureComponent {
         }
     }
 
+    loadImage = () => {
+        if (this.file && this.file.preview) {
+            URL.revokeObjectURL(this.file.preview);
+            this.file = null;
+        }
+    };
+
+    uploadImage = () => {
+        const { id, options } = this.props;
+        if (options && options.uploadImage) {
+            options.uploadImage(id, this.uploadedData);
+        }
+    };
+
+    onDropzoneDrop = files => {
+        if (files && files.length > 0) {
+            this.file = files[0];
+            // let image = new Image();
+            // image.onload = this.loadImage;
+            // image.src = this.file.preview;
+
+            const imageId = `${this.props.id}_preview`;
+            const imgEl = document.getElementById(imageId);
+            imgEl.src = this.file.preview;
+
+            let reader = new FileReader();
+            reader.readAsDataURL(this.file);
+            reader.onloadend = () => {
+                try {
+                    const base64data = reader.result.split(",");
+                    if (base64data.length === 2) {
+                        this.uploadedData = base64data[1];
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            };
+
+            this.setState({ isImageDropped: true });
+        }
+    };
+
+    componentWillReceiveProps(newProps) {
+        if (this.props.value !== newProps.value) {
+            this.setState({ isImageDropped: false });
+            delete this.uploadedData;
+        }
+    }
+
     render() {
         const props = this.props;
         const { BaseInput } = props.registry.widgets;
-        const { id, value } = props;
+        const { id, value, options } = props;
+        const { isImageDropped } = this.state;
         const imageId = `${id}_preview`;
+
+        const enableUpload = options.enableUpload;
         return (
             <div className="ui segment" style={{ margin: 0 }}>
                 <BaseInput className="ui action input" {...props}>
-                    <button
-                        className="ui button"
-                        onClick={() => previewImage(id, imageId)}>
-                        Preview
-                    </button>
+                    {isImageDropped && (
+                        <button
+                            type="button"
+                            className="ui button"
+                            onClick={this.uploadImage}>
+                            Upload
+                        </button>
+                    )}
+                    {!isImageDropped && (
+                        <button
+                            type="button"
+                            className="ui button"
+                            onClick={() => previewImage(id, imageId)}>
+                            Preview
+                        </button>
+                    )}
                 </BaseInput>
                 <div
                     className="ui horizontal divider"
@@ -48,13 +114,33 @@ class ImageWidget extends React.PureComponent {
                     Preview
                 </div>
                 <div className="ui fluid centered medium image">
-                    <img
-                        id={imageId}
-                        src={
-                            value ||
-                            "https://semantic-ui.com/images/wireframe/image.png"
-                        }
-                    />
+                    {enableUpload && (
+                        <Dropzone
+                            className="imagedrop"
+                            accept="image/png, image/jpeg"
+                            onDrop={this.onDropzoneDrop}>
+                            <img
+                                id={imageId}
+                                src={
+                                    value ||
+                                    "https://semantic-ui.com/images/wireframe/image.png"
+                                }
+                            />
+                            <i>
+                                To upload an image, click or drop your image
+                                here.
+                            </i>
+                        </Dropzone>
+                    )}
+                    {!enableUpload && (
+                        <img
+                            id={imageId}
+                            src={
+                                value ||
+                                "https://semantic-ui.com/images/wireframe/image.png"
+                            }
+                        />
+                    )}
                 </div>
             </div>
         );

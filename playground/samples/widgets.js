@@ -101,6 +101,15 @@ module.exports = {
         },
     },
     uiSchema: {
+        stringFormats: {
+            imageURL: {
+                "ui:options": {
+                    enableUpload: true,
+                    uploadImage: (id, imageData) =>
+                        window.alert(id, imageData.length),
+                },
+            },
+        },
         boolean: {
             radio: {
                 "ui:widget": "radio",

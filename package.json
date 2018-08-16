@@ -45,8 +45,10 @@
     "ajv": "^5.2.3",
     "babel-runtime": "^6.26.0",
     "core-js": "^2.5.7",
+    "js-base64": "^2.4.8",
     "lodash.topath": "^4.5.2",
     "prop-types": "^15.5.8",
+    "react-dropzone": "^4.3.0",
     "semantic-ui-css": "^2.3.3"
   },
   "devDependencies": {
