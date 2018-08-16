@@ -108,12 +108,11 @@
     "type": "git",
     "url": "git@github.com:telnet2/react-semantic-ui-jsonform.git"
   },
-  "author": "Nicolas Perriault <nperriault@mozilla.com>",
+  "author": "Joohwi Lee <jlee@autox.ai>",
   "keywords": [
     "react",
     "form",
     "json-schema"
   ],
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/mozilla-services/react-jsonschema-form#readme"
+  "license": "Apache-2.0"
 }
