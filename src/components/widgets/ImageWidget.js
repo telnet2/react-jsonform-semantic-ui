@@ -35,9 +35,17 @@ class ImageWidget extends React.PureComponent {
     };
 
     uploadImage = () => {
-        const { id, options } = this.props;
-        if (options && options.uploadImage) {
-            options.uploadImage(id, this.uploadedData);
+        const { id } = this.props;
+        if (this.uploadedData) {
+            window.dispatchEvent(
+                new CustomEvent("upload-image", {
+                    detail: {
+                        id: id,
+                        name: this.uploadedFile,
+                        data: this.uploadedData,
+                    },
+                })
+            );
         }
     };
 
@@ -58,7 +66,9 @@ class ImageWidget extends React.PureComponent {
                 try {
                     const base64data = reader.result.split(",");
                     if (base64data.length === 2) {
+                        this.uploadedFile = this.file.name;
                         this.uploadedData = base64data[1];
+                        this.uploadImage();
                     }
                 } catch (e) {
                     console.error(e);
@@ -73,6 +83,7 @@ class ImageWidget extends React.PureComponent {
         if (this.props.value !== newProps.value) {
             this.setState({ isImageDropped: false });
             delete this.uploadedData;
+            delete this.uploadedFile;
         }
     }
 

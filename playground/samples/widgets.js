@@ -105,8 +105,6 @@ module.exports = {
             imageURL: {
                 "ui:options": {
                     enableUpload: true,
-                    uploadImage: (id, imageData) =>
-                        window.alert(id, imageData.length),
                 },
             },
         },
