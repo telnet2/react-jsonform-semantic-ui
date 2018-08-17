@@ -27,13 +27,6 @@ class ImageWidget extends React.PureComponent {
         }
     }
 
-    loadImage = () => {
-        if (this.file && this.file.preview) {
-            URL.revokeObjectURL(this.file.preview);
-            this.file = null;
-        }
-    };
-
     uploadImage = () => {
         const { id } = this.props;
         if (this.uploadedData) {
@@ -70,18 +63,20 @@ class ImageWidget extends React.PureComponent {
                         this.uploadedData = base64data[1];
                         this.uploadImage();
                     }
+
+                    if (this.file && this.file.preview) {
+                        URL.revokeObjectURL(this.file.preview);
+                        delete this.file;
+                    }
                 } catch (e) {
                     console.error(e);
                 }
             };
-
-            this.setState({ isImageDropped: true });
         }
     };
 
     componentWillReceiveProps(newProps) {
         if (this.props.value !== newProps.value) {
-            this.setState({ isImageDropped: false });
             delete this.uploadedData;
             delete this.uploadedFile;
         }
@@ -91,29 +86,18 @@ class ImageWidget extends React.PureComponent {
         const props = this.props;
         const { BaseInput } = props.registry.widgets;
         const { id, value, options } = props;
-        const { isImageDropped } = this.state;
         const imageId = `${id}_preview`;
 
         const enableUpload = options.enableUpload;
         return (
             <div className="ui segment" style={{ margin: 0 }}>
                 <BaseInput className="ui action input" {...props}>
-                    {isImageDropped && (
-                        <button
-                            type="button"
-                            className="ui button"
-                            onClick={this.uploadImage}>
-                            Upload
-                        </button>
-                    )}
-                    {!isImageDropped && (
-                        <button
-                            type="button"
-                            className="ui button"
-                            onClick={() => previewImage(id, imageId)}>
-                            Preview
-                        </button>
-                    )}
+                    <button
+                        type="button"
+                        className="ui button"
+                        onClick={() => previewImage(id, imageId)}>
+                        Preview
+                    </button>
                 </BaseInput>
                 <div
                     className="ui horizontal divider"
